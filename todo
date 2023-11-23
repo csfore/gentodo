@@ -96,7 +96,6 @@ def print_subparser_help(parser):
 
 if __name__ == "__main__":
     if not os.path.isdir(STORAGE_DIR):
-        print("Storage does not exist")
         os.makedirs(STORAGE_DIR)
     parser = setup_parser()
     args = parser.parse_args()
