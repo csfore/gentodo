@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# (c) 2023 Christopher Fore
+# This code is licensed under the GPLv3 license (see LICENSE for details)
+
 import json
 import os
 import argparse
@@ -39,18 +42,29 @@ def rm_item():
         with open(TODO_FILE, "w") as todo:
             json.dump(data, todo, indent=4)
 
+def item_count():
+    with open(TODO_FILE, "r") as todo:
+        data = json.load(todo)
+        
+    remaining = len(data.keys())
+    print(f"Items remaining: {remaining}")
+
 def setup_parser():
     parser = argparse.ArgumentParser()
     parser.set_defaults(func=show_todo)
+    parser.add_argument('-v', '--version', action='version', version='0.0.1')
     subparsers = parser.add_subparsers()
     
-    add_parser = subparsers.add_parser('add')
-    add_parser.add_argument('item')
+    add_parser = subparsers.add_parser('add', help="Add an item to your todo list")
+    add_parser.add_argument('item', help="Item to add to your todo list")
     add_parser.set_defaults(func=add_item)
 
-    rm_parser = subparsers.add_parser('rm')
-    rm_parser.add_argument('id')
+    rm_parser = subparsers.add_parser('rm', help="Remove an item from your todo list")
+    rm_parser.add_argument('id', help="ID to remove from your todo list")
     rm_parser.set_defaults(func=rm_item)
+
+    count_parser = subparsers.add_parser('count', help="Shows your remaining item count")
+    count_parser.set_defaults(func=item_count)
 
     #parser.add_argument('-a', '--add', type=str)
     #parser.add_argument('-r', '--remove', type=str)
