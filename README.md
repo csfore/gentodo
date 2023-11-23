@@ -19,7 +19,18 @@ Currently a small feature set but currently the program has:
 
 ## Installing
 
-1. Copy `./todo` to a place in PATH
+### Gentoo
+
+1. Put the ebuild into your local repository
+2. `emerge gentodo::local` or `ebuild ./gentodo-9999.ebuild clean install merge`
+
+That's it! Gentodo will update automagically now since it is a git ebuild.
+
+### Other
+
+Note: you'll have to update manually if you do this method
+
+1. Copy `./todo` to a place in PATH (probably `/usr/bin`)
 2. Enjoy!
 
 ## Todo for todo
