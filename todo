@@ -9,7 +9,12 @@ import argparse
 STORAGE_DIR = os.path.expanduser("~/.local/share/todo")
 TODO_FILE = os.path.join(STORAGE_DIR, "todo.json")
 
+
 def show_todo():
+    '''Shows the items to do'''
+    
+    # If the file cannot be opened, there is nothing to do, implying it has not
+    # been made yet.
     try:
         with open(TODO_FILE, "r") as todo:
             data = json.load(todo)
@@ -17,17 +22,20 @@ def show_todo():
         print("Nothing to do!")
         return
 
+    # Verbose output
     if args.verbose:    
-        print("ID\tItem")
-        print("==\t====")
+        print("ID\tItem\tDetails")
+        print("=======================")
         for key in data:
-            print(f"{key}\t{data[key]}")
+            print(f"{key}\t{data[key]['title']}\t{data[key]['details']}")
     else:
         print("Title\tDetails")
         for key in data:
             print(f"{data[key]['title']}\t{data[key]['details']}")
 
+
 def add_item():
+    '''Adds an item to the todo list'''
     if os.path.exists(TODO_FILE) and os.path.getsize(TODO_FILE) > 0:
         with open(TODO_FILE, "r") as todo:
             data = json.load(todo)
@@ -45,7 +53,9 @@ def add_item():
         json.dump(data, todo, indent=4)
     print(f"Added: {args.title} | {args.details}")
 
+
 def rm_item():
+    '''Removes an item from the todo list by ID'''
     if os.path.exists(TODO_FILE) and os.path.getsize(TODO_FILE) > 0:
         with open(TODO_FILE, "r") as todo:
             data = json.load(todo)
@@ -55,43 +65,41 @@ def rm_item():
             json.dump(data, todo, indent=4)
 
 def item_count():
+    '''Tallies up the amount of items in the list'''
     with open(TODO_FILE, "r") as todo:
         data = json.load(todo)
         
     remaining = len(data.keys())
     print(f"Items remaining: {remaining}")
 
+
 def setup_parser():
+    '''Sets up the parser and adds arguments'''
+
+    # Main parser
     parser = argparse.ArgumentParser(usage="todo <command> [-h]")
-    parser.set_defaults(func=show_todo)
     parser.add_argument('--version', action='version', version='0.0.1')
     parser.add_argument('-v', '--verbose', action='store_true',help="Be descriptive about output (i.e. show item IDs)")
+    parser.set_defaults(func=show_todo)
+    
     subparsers = parser.add_subparsers(help='sub-command help', metavar='')
     
+    # Parser for adding items
     add_parser = subparsers.add_parser('add', help="Add an item to your todo list", usage="todo add [-h] -t <title> -d <details>")
     add_parser.add_argument('-t', '--title', help="Item to add to your todo list")
     add_parser.add_argument('-d', '--details', help="Add some information to your item")
     add_parser.set_defaults(func=add_item)
     
-
+    # Parser for removing items
     rm_parser = subparsers.add_parser('rm', help="Remove an item from your todo list", usage="todo rm <id>")
     rm_parser.add_argument('id', help="ID to remove from your todo list")
     rm_parser.set_defaults(func=rm_item)
 
+    # Parser for counting items
     count_parser = subparsers.add_parser('count', help="Shows your remaining item count")
     count_parser.set_defaults(func=item_count)
 
-    #parser.add_argument('-a', '--add', type=str)
-    #parser.add_argument('-r', '--remove', type=str)
     return parser
-
-def print_subparser_help(parser):
-    for action in parser._actions:
-        if isinstance(action, argparse._SubParsersAction):
-            for choice, subparser in action.choices.items():
-                print(f"Help for '{choice}' subcommand:")
-                subparser.print_help()
-                print("\n")
 
 
 if __name__ == "__main__":
@@ -99,8 +107,5 @@ if __name__ == "__main__":
         os.makedirs(STORAGE_DIR)
     parser = setup_parser()
     args = parser.parse_args()
-    if 'func' not in args:
-        print_subparser_help(parser)
-    else:
-        args.func()
+    args.func()
     #print(args)
