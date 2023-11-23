@@ -1,2 +1,6 @@
 .venv/
 dist/
+
+gentodo/__pycache__
+gentodo.egg-info/
+
