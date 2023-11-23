@@ -45,8 +45,8 @@ def add_item():
         newest_id = 0
     
     data[newest_id + 1] = { 
-        "title": args.title,
-        "details": args.details
+        "title": " ".join(args.title),
+        "details": " ".join(args.details)
     }
 
     with open(TODO_FILE, 'w') as todo:
@@ -86,8 +86,8 @@ def setup_parser():
     
     # Parser for adding items
     add_parser = subparsers.add_parser('add', help="Add an item to your todo list", usage="todo add [-h] -t <title> -d <details>")
-    add_parser.add_argument('-t', '--title', help="Item to add to your todo list")
-    add_parser.add_argument('-d', '--details', help="Add some information to your item")
+    add_parser.add_argument('-t', '--title', nargs='+', help="Item to add to your todo list")
+    add_parser.add_argument('-d', '--details', nargs='+', help="Add some information to your item")
     add_parser.set_defaults(func=add_item)
     
     # Parser for removing items
