@@ -10,9 +10,13 @@ STORAGE_DIR = os.path.expanduser("~/.local/share/todo")
 TODO_FILE = os.path.join(STORAGE_DIR, "todo.json")
 
 def show_todo():
-    with open(TODO_FILE, "r") as todo:
-        data = json.load(todo)
-    
+    try:
+        with open(TODO_FILE, "r") as todo:
+            data = json.load(todo)
+    except FileNotFoundError:
+        print("Nothing to do!")
+        return
+
     if args.verbose:    
         print("ID\tItem")
         print("==\t====")
@@ -89,13 +93,11 @@ def print_subparser_help(parser):
                 subparser.print_help()
                 print("\n")
 
-def main():
+
+if __name__ == "__main__":
     if not os.path.isdir(STORAGE_DIR):
         print("Storage does not exist")
         os.makedirs(STORAGE_DIR)
-    
-
-if __name__ == "__main__":
     parser = setup_parser()
     args = parser.parse_args()
     if 'func' not in args:
@@ -103,4 +105,3 @@ if __name__ == "__main__":
     else:
         args.func()
     #print(args)
-    main()
