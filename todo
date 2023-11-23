@@ -91,9 +91,9 @@ def setup_parser():
     add_parser.set_defaults(func=add_item)
     
     # Parser for removing items
-    rm_parser = subparsers.add_parser('rm', help="Remove an item from your todo list", usage="todo rm <id>")
-    rm_parser.add_argument('id', help="ID to remove from your todo list")
-    rm_parser.set_defaults(func=rm_item)
+    del_parser = subparsers.add_parser('del', help="Remove an item from your todo list", usage="todo rm <id>")
+    del_parser.add_argument('id', help="ID to remove from your todo list")
+    del_parser.set_defaults(func=rm_item)
 
     # Parser for counting items
     count_parser = subparsers.add_parser('count', help="Shows your remaining item count")
