@@ -18,7 +18,7 @@ fi
 HOMEPAGE="https://github.com/csfore/gentodo"
 DESCRIPTION="Todo program to help enhance your Gentoo workflow"
 
-LICENSE="GPL3"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
