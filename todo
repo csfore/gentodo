@@ -73,6 +73,17 @@ def item_count():
     print(f"Items remaining: {remaining}")
 
 
+def edit_item():
+    with open(TODO_FILE, "r") as todo:
+        data = json.load(todo)
+
+    data[args.id]['title'] = " ".join(args.title)
+    data[args.id]['details'] = " ".join(args.details)
+
+    with open(TODO_FILE, "w") as todo:
+        json.dump(data, todo, indent=4)
+
+
 def setup_parser():
     '''Sets up the parser and adds arguments'''
 
@@ -98,6 +109,14 @@ def setup_parser():
     # Parser for counting items
     count_parser = subparsers.add_parser('count', help="Shows your remaining item count")
     count_parser.set_defaults(func=item_count)
+
+    # Parser for editing
+    edit_parser = subparsers.add_parser('edit', help="Edit an item by id", usage="todo edit <id> -t <title> -d <details>")
+    edit_parser.add_argument('id')
+    edit_parser.add_argument('-t', '--title', nargs='+', help="New title")
+    edit_parser.add_argument('-d', '--details', nargs='+', help="New details")
+    edit_parser.set_defaults(func=edit_item)
+
 
     return parser
 
