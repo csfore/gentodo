@@ -35,7 +35,8 @@ Note: you'll have to update manually if you do this method
 
 ## Todo for todo
 
-- [ ] Add ability to edit entries
+- [x] Add ability to edit entries
+  - Added in 9490b63
 - [ ] Search ability (for those that have an infinitely growing todo list)
 - [ ] Refactor/rewrite in other language? 
   - Not sure how wise or doable this would be. Current candidates are Rust, Go, or Racket.
