@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gentodo"
+version = "0.0.3"
+authors = [
+	{name = "Christopher Fore", email = "csfore@posteo.net"},
+]
+description = "Todo app"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "GPLv3"}
+
+[project.scripts]
+gentodo = "gentodo.main:main"
+
+[tool.setuptools]
+packages = ["gentodo"]
