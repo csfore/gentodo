@@ -19,7 +19,6 @@ class Gentodo:
 
     def calc_length(self):
         longest = 0
-        #data = read_storage()
         for todo_id in self.data:
             if len(self.data[todo_id]['title']) > longest:
                 longest = len(self.data[todo_id]['title'])
@@ -36,123 +35,9 @@ class Gentodo:
         with open(TODO_FILE, "w") as todo:
             json.dump(self.data, todo, indent=4)
 
-    #def show_todo(self, args):
-    #    '''Shows the items to do'''
-    #    #print(f"ID entered: {args.id}")
-    #    
-    #    # If the file cannot be opened, there is nothing to do, implying it has not
-    #    # been made yet.
-    #    #try:
-    #    #    data = read_storage()
-    #    #except FileNotFoundError:
-    #    #    print("Nothing to do!")
-    #    #    return
-    #
-    #    #if args.id is not None:
-    #    #    print(type(args.id))
-    #    #    print(f"{data[args.id]}")
-    #
-    #    # Verbose output
-    #    if args.verbose:    
-    #        print("{:<20}│ {:<20}│ Details".format("ID", "Item"))
-    #        print("{}".format("─" * 50))
-    #        for key in self.data:
-    #            print(f"{key:<20}│ {self.data[key]['title']:<20}│ {self.data[key]['details']}")
-    #    else:
-    #        print("{:<20}│ Details".format("Title"))
-    #        print("{}".format("─" * int(48*1.5)))
-    #        for key in self.data:
-    #            print(f"{self.data[key]['title']:<50}│ {self.data[key]['details']}")
-    #
-    #
-    #def add_item(self, args, gentodo):
-    #    '''Adds an item to the todo list'''
-    #    if os.path.exists(TODO_FILE) and os.path.getsize(TODO_FILE) > 0:
-    #        data = read_storage()
-    #        newest_id = 0 if len(data.keys()) == 0 else int(list(data.keys())[-1])
-    #    else:
-    #        data = {}
-    #        newest_id = 0
-    #    
-    #    data[newest_id + 1] = { 
-    #        "title": " ".join(args.title),
-    #        "details": " ".join(args.details)
-    #    }
-    #
-    #    write_storage(data)
-    #    print(f"Added: {' '.join(args.title)} | {' '.join(args.details)}")
-    #
-    #
-    #def rm_item(self, args):
-    #    '''Removes an item from the todo list by ID'''
-    #    if os.path.exists(TODO_FILE) and os.path.getsize(TODO_FILE) > 0:
-    #        data = read_storage()
-    #        data.pop("{0}".format(args.id))
-    #        
-    #        write_storage(data)
-    #
-    #def item_count(self, args):
-    #    '''Tallies up the amount of items in the list'''
-    #    data = read_storage()
-    #        
-    #    remaining = len(data.keys())
-    #    print(f"Items remaining: {remaining}")
-    #
-    #
-    #def edit_item(self, args):
-    #    '''Edits an item entry'''
-    #    #data = read_storage()
-    #
-    #    self.data[args.id]['title'] = " ".join(args.title)
-    #    self.data[args.id]['details'] = " ".join(args.details)
-    #    
-    #    write_storage(data)
-    #
-    #
-    #def search_items(self, args):
-    #    print(f"Searching for: {args.term}")
-    #    data = read_storage()
-    #    for key in data:
-    #        for val in data[key]:
-    #            if args.term in data[key][val]:
-    #                print(data[key])
 
-
-#def read_storage():
-#    with open(TODO_FILE, "r") as todo:
-#        return json.load(todo)
-#
-#def write_storage(data):
-#    with open(TODO_FILE, "w") as todo:
-#        json.dump(data, todo, indent=4)
-#
-#
-#def calc_length():
-#    longest = 0
-#    data = read_storage()
-#    for todo_id in data:
-#        if len(data[todo_id]['title']) > longest:
-#            longest = len(data[todo_id]['title'])
-#
-#    return longest
-#
-#
 def show_todo(args, gentodo):
     '''Shows the items to do'''
-    #print(f"ID entered: {args.id}")
-    
-    # If the file cannot be opened, there is nothing to do, implying it has not
-    # been made yet.
-    #try:
-    #    data = read_storage()
-    #except FileNotFoundError:
-    #    print("Nothing to do!")
-    #    return
-
-    #if args.id is not None:
-    #    print(type(args.id))
-    #    print(f"{data[args.id]}")
-    
     spaces = gentodo.longest + 2
 
     # Verbose output
