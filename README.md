@@ -1,4 +1,4 @@
-# Todo
+# Gentodo
 
 A simple todo app written in Python for the CLI
 
@@ -17,6 +17,16 @@ Currently a small feature set but currently the program has:
   - Might use Click? See Todo
 - Simple enough syntax for anyone to use
 
+## Building
+
+Gentodo currently uses setuptools as its build system so building it is extremely easy.
+
+1. Ensure you have Python installed (Gentodo is tested on Python 3.11 and 3.12
+2. Create a virtual environment with `python -m venv .venv`
+3. Source the environment with `. .venv/bin/activate`
+4. Use pip to build it with `pip install -e .`
+5. In .venv/bin there should now be an executable called `gentodo`
+
 ## Installing
 
 ### Gentoo
@@ -30,7 +40,7 @@ That's it! Gentodo will update automagically now since it is a git ebuild.
 
 Note: you'll have to update manually if you do this method
 
-1. Copy `./todo` to a place in PATH (probably `/usr/bin`)
+1. Copy `./gentodo` to a place in PATH (probably `/usr/bin`)
 2. Enjoy!
 
 ## Todo for todo
@@ -48,3 +58,7 @@ Note: you'll have to update manually if you do this method
   - Broaden to bugzilla in general?
 - [ ] motd in the terminal for when a user logs in?
   - Can somewhat be done already with `todo count` but could be better
+
+# Acknowledgements
+
+Thanks to @immolo for the name suggestion. It is far better than `todo`.
