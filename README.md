@@ -61,4 +61,4 @@ Note: you'll have to update manually if you do this method
 
 # Acknowledgements
 
-Thanks to @immolo for the name suggestion. It is far better than `todo`.
+Thanks to [@immolo](https://github.com/immolo) for the name suggestion. It is far better than `todo`.
