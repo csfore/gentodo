@@ -2,7 +2,7 @@
 # (c) 2023 Christopher Fore
 # This code is licensed under the GPLv3 license (see LICENSE for details)
 
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 
 import json
 import os
