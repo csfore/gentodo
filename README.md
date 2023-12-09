@@ -36,9 +36,9 @@ Note: you'll have to update manually if you do this method
 ## Todo for todo
 
 - [x] Add ability to edit entries
-  - Added in https://github.com/csfore/gentodo/commit/9490b63381a3f0ea7affca174d3b3eaf27bee64f
+  - Added in [9490b63](https://github.com/csfore/gentodo/commit/9490b63381a3f0ea7affca174d3b3eaf27bee64f)
 - [x] Search ability (for those that have an infinitely growing todo list)
-  - Added in https://github.com/csfore/gentodo/commit/c62be087e08e0cad4ecead7177271a07cb965a18
+  - Added in [c62be08](https://github.com/csfore/gentodo/commit/9490b63381a3f0ea7affca174d3b3eaf27bee64f)
 - [ ] Refactor/rewrite in other language? 
   - Not sure how wise or doable this would be. Current candidates are Rust, Go, or Racket.
   - If refactor, using the Click library maybe? I'd rather keep dependencies to a minimum though
