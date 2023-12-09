@@ -32,7 +32,8 @@ Gentodo currently uses setuptools as its build system so building it is extremel
 ### Gentoo
 
 1. Put the ebuild into your local repository
-2. `emerge gentodo::local` or `ebuild ./gentodo-9999.ebuild clean install merge`
+2. In `package.accept_keywords` put `app-misc/gentodo **`
+3. `emerge -av gentodo::local` or `ebuild ./gentodo-9999.ebuild clean install merge`
 
 That's it! Gentodo will update automagically now since it is a git ebuild.
 
