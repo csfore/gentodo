@@ -19,7 +19,11 @@ class Gentodo:
 
     def calc_length(self):
         longest = 0
+
         for todo_id in self.data:
+            # Edge case in case someone doesn't put anything in
+            if self.data[todo_id]['title'] == None:
+                continue
             if len(self.data[todo_id]['title']) > longest:
                 longest = len(self.data[todo_id]['title'])
     
@@ -69,7 +73,7 @@ def add_item(args, gentodo):
         "details": " ".join(args.details)
     }
 
-    gentodo.write_storage()
+    gentodo.write()
     print(f"Added: {' '.join(args.title)} | {' '.join(args.details)}")
 
 

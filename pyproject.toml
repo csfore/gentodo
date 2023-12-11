@@ -17,5 +17,4 @@ license = {text = "GPLv3"}
 gentodo = "gentodo.main:main"
 
 [tool.setuptools]
-#package-dir = {"" = "gentodo"}
 packages = ["gentodo"]
