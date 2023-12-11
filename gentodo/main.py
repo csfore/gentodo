@@ -18,6 +18,7 @@ class Gentodo:
         self.longest = self.calc_length()
 
     def calc_length(self):
+        """Calculates the longest title in the todo list"""
         longest = 0
 
         for todo_id in self.data:
@@ -40,35 +41,35 @@ class Gentodo:
             json.dump(self.data, todo, indent=4)
 
 
+# TODO:
+# Fix long titles breaking the output
+# TODO:
+# Implement a form of wrapping
 def show_todo(args, gentodo):
-    '''Shows the items to do'''
+    """Shows the items to do"""
     spaces = gentodo.longest + 2
     hspaces = (spaces // 2) + 3
 
     # Verbose output
-    if args.verbose:    
-        print("{:<20}│ {:<20}│ Details".format("ID", "Item"))
+    if args.verbose:
+        print("{} | {:<20}| {}".format("ID", "Title", "Detail"))
         print("{}".format("─" * 50))
         for key in gentodo.data:
-            print(f"{key:<20}│ {gentodo.data[key]['title']:<20}│ {gentodo.data[key]['details']}")
+            print(f"{key} │ {gentodo.data[key]['title']:<20}│ {gentodo.data[key]['details']}")
     elif args.brief:
-        pad_title = f"{{:<{hspaces}}}"
-        pad_string = f"{{:<{spaces}}}"
         print("Title".rjust(hspaces))
         print("{}".format("─" * spaces))
         for key in gentodo.data:
             print(f"{gentodo.data[key]['title']}")
     else:
-        pad_title = f"{{:<{spaces}}}│ Details"
-        print(f"{{:<{spaces}}}│ Details".format("Title"))
+        print("{}| {}".format("Title".ljust(spaces), "Details"))
         print("{}".format("─" * int(48*1.5)))
         for key in gentodo.data:
-            pad_string = f"{{:<{spaces}}}| {{}}"
-            print(pad_string.format(gentodo.data[key]['title'], gentodo.data[key]['details']))
+            print("{}| {}".format(gentodo.data[key]['title'].ljust(spaces), gentodo.data[key]['details']))
 
 
 def add_item(args, gentodo):
-    '''Adds an item to the todo list'''
+    """Adds an item to the todo list"""
     if os.path.exists(TODO_FILE) and os.path.getsize(TODO_FILE) > 0:
         #data = read_storage()
         newest_id = 0 if len(gentodo.data.keys()) == 0 else int(list(gentodo.data.keys())[-1])
@@ -86,21 +87,21 @@ def add_item(args, gentodo):
 
 
 def rm_item(args, gentodo):
-    '''Removes an item from the todo list by ID'''
+    """Removes an item from the todo list by ID"""
     if os.path.exists(TODO_FILE) and os.path.getsize(TODO_FILE) > 0:
         gentodo.data.pop("{0}".format(args.id))
         gentodo.write()
         
 
 def item_count(args, gentodo):
-    '''Tallies up the amount of items in the list'''
+    """Tallies up the amount of items in the list"""
         
     remaining = len(gentodo.data.keys())
     print(f"Items remaining: {remaining}")
 
 
 def edit_item(args, gentodo):
-    '''Edits an item entry'''
+    """Edits an item entry"""
     gentodo.data[args.id]['title'] = " ".join(args.title)
     gentodo.data[args.id]['details'] = " ".join(args.details)
     
@@ -108,15 +109,18 @@ def edit_item(args, gentodo):
 
 
 def search_items(args, gentodo):
-    print(f"Searching for: {args.term}")
+    print(f"Searching for: {args.term}\n\n")
+    print("ID | Title")
+    print("{}".format("─" * int(gentodo.longest/2)))
     for key in gentodo.data:
         for val in gentodo.data[key]:
             if args.term in gentodo.data[key][val]:
-                print(gentodo.data[key])
+                print("{} | {}".format(key, gentodo.data[key][val]))
 
-
+# TODO:
+# Break this into a separate file to prevent a huge single file
 def setup_parser():
-    '''Sets up the parser and adds arguments'''
+    """Sets up the parser and adds arguments"""
 
     # Main parser
     parser = argparse.ArgumentParser(usage="todo <command> [-h]")
@@ -162,25 +166,9 @@ def main():
         os.makedirs(STORAGE_DIR)
     gentodo = Gentodo()
     parser = setup_parser()
-    #parser.set_defaults(func=gentodo.show_todo)
-
-    #parser_funcs = {
-    #    'add': gentodo.add_item,
-    #    'del': gentodo.rm_item,
-    #    'edit': gentodo.edit_item,
-    #    'count': gentodo.item_count,
-    #    'search': gentodo.search_items,
-    #}
 
     args = parser.parse_args()
     args.func(args, gentodo)
-    #command = args.func.__name__
-    #parser.set_defaults(func=gentodo.show_todo)
-    #if command in parser_funcs:
-    #    print("c")
-    #    parser_funcs[command](args)
-    #else:
-    #    gentodo.show_todo(args)
 
 if __name__ == "__main__":
     main()
