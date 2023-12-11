@@ -43,6 +43,7 @@ class Gentodo:
 def show_todo(args, gentodo):
     '''Shows the items to do'''
     spaces = gentodo.longest + 2
+    hspaces = (spaces // 2) + 3
 
     # Verbose output
     if args.verbose:    
@@ -50,6 +51,13 @@ def show_todo(args, gentodo):
         print("{}".format("─" * 50))
         for key in gentodo.data:
             print(f"{key:<20}│ {gentodo.data[key]['title']:<20}│ {gentodo.data[key]['details']}")
+    elif args.brief:
+        pad_title = f"{{:<{hspaces}}}"
+        pad_string = f"{{:<{spaces}}}"
+        print("Title".rjust(hspaces))
+        print("{}".format("─" * spaces))
+        for key in gentodo.data:
+            print(f"{gentodo.data[key]['title']}")
     else:
         pad_title = f"{{:<{spaces}}}│ Details"
         print(f"{{:<{spaces}}}│ Details".format("Title"))
@@ -114,7 +122,7 @@ def setup_parser():
     parser = argparse.ArgumentParser(usage="todo <command> [-h]")
     parser.add_argument('--version', action='version', version='0.0.1')
     parser.add_argument('-v', '--verbose', action='store_true',help="Be descriptive about output (i.e. show item IDs)")
-    #parser.add_argument('id')
+    parser.add_argument('-b', '--brief', action='store_true', help="Show just the title")
     parser.set_defaults(func=show_todo)
     
     subparsers = parser.add_subparsers(help='sub-command help', metavar='')
