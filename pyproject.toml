@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gentodo"
-version = "0.0.3"
+version = "0.0.5"
 authors = [
 	{name = "Christopher Fore", email = "csfore@posteo.net"},
 ]
@@ -17,4 +17,5 @@ license = {text = "GPLv3"}
 gentodo = "gentodo.main:main"
 
 [tool.setuptools]
+#package-dir = {"" = "gentodo"}
 packages = ["gentodo"]
