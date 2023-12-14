@@ -77,6 +77,10 @@ def add_item(args, gentodo):
         data = {}
         newest_id = 0
     
+    if args.details is None:
+        args.details = ["No", "details"]
+
+
     gentodo.data[newest_id + 1] = { 
         "title": " ".join(args.title),
         "details": " ".join(args.details)
