@@ -3,15 +3,18 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "gentodo"
-version = "0.0.5"
 authors = [
 	{name = "Christopher Fore", email = "csfore@posteo.net"},
 ]
+name = "gentodo"
+version = "0.0.5"
 description = "Todo app"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "GPLv3"}
+dependencies = [
+	"requests",
+]
 
 [project.scripts]
 gentodo = "main:main"

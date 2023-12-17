@@ -49,18 +49,10 @@ def setup_parser():
     search_parser.add_argument('term')
     search_parser.set_defaults(func=gentodo.search_items)
 
-    # Parser for bugzilla
-    bug_parser = subparsers.add_parser('bug', help="Interface with Bugzilla", usage="gentodo bug ...")
-    bug_parser.add_argument('-s', help="Search bugzilla")
-    bug_parser.
-
     return parser
 
 
 def main():
-    #from parser import setup_parser
-    #if not os.path.isdir(STORAGE_DIR):
-    #    os.makedirs(STORAGE_DIR)
     todo = gentodo.Gentodo()
     parser = setup_parser()
 
