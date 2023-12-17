@@ -14,7 +14,10 @@ requires-python = ">=3.10"
 license = {text = "GPLv3"}
 
 [project.scripts]
-gentodo = "gentodo.main:main"
+gentodo = "main:main"
 
-[tool.setuptools]
-packages = ["gentodo"]
+#[tool.setuptools]
+#packages = ["gentodo"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
