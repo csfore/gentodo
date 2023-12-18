@@ -7,13 +7,14 @@ from gentodo import cli
 import bugzilla
 import argparse
 
+__version__ = "0.1.0"
 
 def setup_parser():
     """Sets up the parser and adds arguments"""
 
     # Main parser
     parser = argparse.ArgumentParser(usage="gentodo <command> [-h]")
-    parser.add_argument('--version', action='version', version='0.0.1')
+    parser.add_argument('--version', action='version', version=__version__)
     parser.add_argument('-v', '--verbose', action='store_true',help="Be descriptive about output (i.e. show item IDs)")
     parser.add_argument('-b', '--brief', action='store_true', help="Show just the title")
     parser.set_defaults(func=cli.show_todo)
