@@ -7,7 +7,7 @@ authors = [
 	{name = "Christopher Fore", email = "csfore@posteo.net"},
 ]
 name = "gentodo"
-version = "0.0.5"
+version = "0.1.0"
 description = "Todo app"
 readme = "README.md"
 requires-python = ">=3.10"
