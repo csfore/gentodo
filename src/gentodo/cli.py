@@ -1,6 +1,6 @@
 import json
 import os
-import parser
+from gentodo import main
 
 STORAGE_DIR = os.path.expanduser("~/.local/share/todo")
 TODO_FILE = os.path.join(STORAGE_DIR, "todo.json")
@@ -12,7 +12,7 @@ class Gentodo:
             os.makedirs(STORAGE_DIR)
         self.data = self.read()
         self.longest = self.calc_length()
-        self.parser = parser.setup_parser()
+        self.parser = main.setup_parser()
 
     def calc_length(self):
         """Calculates the longest title in the todo list"""

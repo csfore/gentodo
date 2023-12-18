@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.scripts]
-gentodo = "main:main"
+gentodo = "gentodo.main:main"
 
 #[tool.setuptools]
 #packages = ["gentodo"]

@@ -34,9 +34,3 @@ DEPEND="
 RDEPEND="
 	${PYTHON_DEPS}
 "
-
-
-
-#src_install() {
-#	dobin todo
-#}
