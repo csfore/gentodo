@@ -4,3 +4,4 @@ build/
 src/__pycache__
 gentodo.egg-info/
 
+*__pycache__*
