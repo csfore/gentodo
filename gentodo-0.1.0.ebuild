@@ -12,7 +12,7 @@ if [[ ${PV} == 9999* ]] ; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/csfore/gentodo.git"
 else
-	SRC_URI="https://github.com/csfore/gentodo/archive/${PV}.tar.gz"
+	SRC_URI="https://github.com/csfore/gentodo/releases/download/${PV}/gentodo-${PV}.tar.gz"
 	KEYWORDS="~amd64"
 fi
 
