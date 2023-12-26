@@ -10,6 +10,11 @@ class Gentodo:
     def __init__(self):
         if not os.path.isdir(STORAGE_DIR):
             os.makedirs(STORAGE_DIR)
+        
+        if not os.path.isfile(TODO_FILE):
+            with open(TODO_FILE, "w") as todo:
+                json.dump({}, todo, indent=4)
+
         self.data = self.read()
         self.longest = self.calc_length()
         self.parser = main.setup_parser()
@@ -17,6 +22,9 @@ class Gentodo:
     def calc_length(self):
         """Calculates the longest title in the todo list"""
         longest = 0
+
+        if self.data is None:
+            return longest
 
         for todo_id in self.data:
             # Edge case in case someone doesn't put anything in
@@ -30,7 +38,11 @@ class Gentodo:
 
     def read(self):
         with open(TODO_FILE, "r") as todo:
-            return json.load(todo)
+            try:
+                data = json.load(todo)
+            except json.decoder.JSONDecodeError:
+                return None
+            return data
 
 
     def write(self):
@@ -47,6 +59,10 @@ def show_todo(args, gentodo):
     """Shows the items to do"""
     spaces = gentodo.longest + 2
     hspaces = (spaces // 2) + 3
+    
+    if gentodo.data is None:
+        print("Nothing to do!")
+        return
 
     # Verbose output
     if args.verbose:
