@@ -23,12 +23,11 @@ def setup_parser():
                         const='left',
                         choices=['left', 'center', 'right'],
                         help="Show just the title")
-    
 
     parser.set_defaults(func=cli.show_todo)
     subparsers = parser.add_subparsers(help='sub-command help',
                                        metavar='')
-    
+
     # Parser for adding items
     add_parser = subparsers.add_parser('add',
                                        help="Add an item to your todo list",
