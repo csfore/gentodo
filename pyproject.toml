@@ -7,7 +7,7 @@ authors = [
 	{name = "Christopher Fore", email = "csfore@posteo.net"},
 ]
 name = "gentodo"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Todo app"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,8 +19,8 @@ dependencies = [
 [project.scripts]
 gentodo = "gentodo.main:main"
 
-#[tool.setuptools]
-#packages = ["gentodo"]
-
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.dynamic]
+version = {attr = "gentodo.__version__"}

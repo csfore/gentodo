@@ -1,26 +1,32 @@
+'''Module for the Gentodo class and its cli functions'''
+
 import json
 import os
-from gentodo import main
+from gentodo import parser
+
 
 STORAGE_DIR = os.path.expanduser("~/.local/share/todo")
 TODO_FILE = os.path.join(STORAGE_DIR, "todo.json")
 
 class Gentodo:
+    '''Main class for parsing the todo file and storing data'''
+
+    __slots__ = ["data", "longest", "parser"]
 
     def __init__(self):
         if not os.path.isdir(STORAGE_DIR):
             os.makedirs(STORAGE_DIR)
-        
+
         if not os.path.isfile(TODO_FILE):
-            with open(TODO_FILE, "w") as todo:
+            with open(TODO_FILE, "w", encoding="utf_8") as todo:
                 json.dump({}, todo, indent=4)
 
         self.data = self.read()
         self.longest = self.calc_length()
-        self.parser = main.setup_parser()
+        self.parser = parser.setup_parser()
 
     def calc_length(self):
-        """Calculates the longest title in the todo list"""
+        '''Calculates the longest title in the todo list'''
         longest = 0
 
         if self.data is None:
@@ -28,7 +34,7 @@ class Gentodo:
 
         for todo_id in self.data:
             # Edge case in case someone doesn't put anything in
-            if self.data[todo_id]['title'] == None:
+            if self.data[todo_id]['title'] is None:
                 continue
             if len(self.data[todo_id]['title']) > longest:
                 longest = len(self.data[todo_id]['title'])
@@ -37,7 +43,8 @@ class Gentodo:
 
 
     def read(self):
-        with open(TODO_FILE, "r") as todo:
+        '''Reads from the todo file into `data`'''
+        with open(TODO_FILE, "r", encoding="utf_8") as todo:
             try:
                 data = json.load(todo)
             except json.decoder.JSONDecodeError:
@@ -46,7 +53,8 @@ class Gentodo:
 
 
     def write(self):
-        with open(TODO_FILE, "w") as todo:
+        '''Writes `data` into the todo file'''
+        with open(TODO_FILE, "w", encoding="utf_8") as todo:
             json.dump(self.data, todo, indent=4)
 
 
@@ -56,40 +64,35 @@ class Gentodo:
 # TODO:
 # Implement a form of wrapping
 def show_todo(args, gentodo):
-    """Shows the items to do"""
+    '''Shows the items to do'''
     spaces = gentodo.longest + 2
     hspaces = (spaces // 2) + 3
-    
+
     if gentodo.data is None:
         print("Nothing to do!")
         return
 
     # Verbose output
     if args.verbose:
-        print("{} | {:<20}| {}".format("ID", "Title", "Detail"))
-        print("{}".format("─" * 50))
+        print(f"ID | {'Title':<20}| Detail")
+        print(f"{'─'*50}")
         for key in gentodo.data:
             print(f"{key} │ {gentodo.data[key]['title']:<20}│ {gentodo.data[key]['details']}")
     elif args.brief:
         print("Title".rjust(hspaces))
-        print("{}".format("─" * spaces))
+        print(f"{'─'*50}")
         for key in gentodo.data:
             print(f"{gentodo.data[key]['title']}")
     else:
-        print("{}| {}".format("Title".ljust(spaces), "Details"))
-        print("{}".format("─" * int(48*1.5)))
+        print(f"{'Title'.ljust(spaces)}| Details")
+        print(f"{'─'*int(48*1.5)}")
         for key in gentodo.data:
-            print("{}| {}".format(gentodo.data[key]['title'].ljust(spaces), gentodo.data[key]['details']))
+            print(f"{gentodo.data[key]['title'].ljust(spaces)}| {gentodo.data[key]['details']}")
 
 
 def add_item(args, gentodo):
-    """Adds an item to the todo list"""
-    if os.path.exists(TODO_FILE) and os.path.getsize(TODO_FILE) > 0:
-        #data = read_storage()
-        newest_id = 0 if len(gentodo.data.keys()) == 0 else int(list(gentodo.data.keys())[-1])
-    else:
-        data = {}
-        newest_id = 0
+    '''Adds an item to the todo list'''
+    newest_id = 0 if len(gentodo.data.keys()) == 0 else int(list(gentodo.data.keys())[-1])
 
     if args.details is None:
         args.details = ["No", "details"]
@@ -105,21 +108,21 @@ def add_item(args, gentodo):
 
 
 def rm_item(args, gentodo):
-    """Removes an item from the todo list by ID"""
+    '''Removes an item from the todo list by ID'''
     if os.path.exists(TODO_FILE) and os.path.getsize(TODO_FILE) > 0:
-        gentodo.data.pop("{0}".format(args.id))
+        gentodo.data.pop(f"{args.id}")
         gentodo.write()
 
 
 def item_count(args, gentodo):
-    """Tallies up the amount of items in the list"""
+    '''Tallies up the amount of items in the list'''
 
     remaining = len(gentodo.data.keys())
     print(f"Items remaining: {remaining}")
 
 
 def edit_item(args, gentodo):
-    """Edits an item entry"""
+    '''Edits an item entry'''
     gentodo.data[args.id]['title'] = " ".join(args.title)
     gentodo.data[args.id]['details'] = " ".join(args.details)
 
@@ -127,10 +130,11 @@ def edit_item(args, gentodo):
 
 
 def search_items(args, gentodo):
+    '''Searches for an item in the todo list'''
     print(f"Searching for: {args.term}\n\n")
     print("ID | Title")
-    print("{}".format("─" * int(gentodo.longest/2)))
+    print(f"{'─'*int(gentodo.longest/2)}")
     for key in gentodo.data:
         for val in gentodo.data[key]:
             if args.term in gentodo.data[key][val]:
-                print("{} | {}".format(key, gentodo.data[key][val]))
+                print(f"{key} | {gentodo.data[key][val]}")
