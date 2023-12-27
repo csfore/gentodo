@@ -25,17 +25,17 @@ Gentodo currently uses setuptools as its build system so building it is extremel
 2. Create a virtual environment with `python -m venv .venv`
 3. Source the environment with `. .venv/bin/activate`
 4. Use pip to build it with `pip install -e .`
-5. In .venv/bin there should now be an executable called `gentodo`
+5. In `.venv/bin` there should now be an executable called `gentodo` and any changes in `src/gentodo` will be reflected in this executable.
 
 ## Installing
 
 ### Gentoo
 
 1. Put the ebuild into your local repository
-2. In `package.accept_keywords` put `app-misc/gentodo **`
-3. `emerge -av gentodo::local` or `ebuild ./gentodo-9999.ebuild clean install merge`
+2. In `package.accept_keywords` put `app-misc/gentodo ~amd64`
+3. `emerge -av gentodo::local` or `ebuild ./gentodo-[latest-version].ebuild clean install merge`
 
-That's it! Gentodo will update automagically now since it is a git ebuild.
+That's it!
 
 ### Other
 
