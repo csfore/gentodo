@@ -64,7 +64,6 @@ class Gentodo:
 def show_todo(args, gentodo):
     '''Shows the items to do'''
     spaces = gentodo.longest + 2
-    hspaces = (spaces // 2) + 3
 
     if gentodo.data is None:
         print("Nothing to do!")
@@ -72,18 +71,25 @@ def show_todo(args, gentodo):
 
     # Verbose output
     if args.verbose:
-        print(f"ID | {'Title':<20}| Detail")
-        print(f"{'─'*50}")
+        print(f"ID | {'Title'.ljust(spaces)}| Detail")
+        print(f"{'─'*(spaces+14)}")
         for key in gentodo.data:
-            print(f"{key} │ {gentodo.data[key]['title']:<20}│ {gentodo.data[key]['details']}")
+            print(f"{key:<2} │ {gentodo.data[key]['title'].ljust(spaces)}│ {gentodo.data[key]['details']}")
     elif args.brief:
-        print("Title".rjust(hspaces))
-        print(f"{'─'*50}")
+        print("Title".center(spaces))
+        print(f"{'─'*spaces}")
         for key in gentodo.data:
-            print(f"{gentodo.data[key]['title']}")
+            title = gentodo.data[key]['title']
+            match args.brief:
+                case 'left':
+                    print(title)
+                case 'center':
+                    print(title.center(spaces))
+                case 'right':
+                    print(title.rjust(spaces))
     else:
         print(f"{'Title'.ljust(spaces)}| Details")
-        print(f"{'─'*int(48*1.5)}")
+        print(f"{'─'*(spaces+9)}")
         for key in gentodo.data:
             print(f"{gentodo.data[key]['title'].ljust(spaces)}| {gentodo.data[key]['details']}")
 
