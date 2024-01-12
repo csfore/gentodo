@@ -2,6 +2,7 @@
 This code is licensed under the GPLv3 license (see LICENSE for details)
 '''
 
+# snail was here, hiiiiiiiiiiiiiiiiiiiiiiiii, also a quote from immolo; "gentodo tells me what to do!"
 #import bugzilla // commented out until used
 from gentodo import cli, parser
 
