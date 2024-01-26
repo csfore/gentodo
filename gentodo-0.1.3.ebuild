@@ -39,6 +39,6 @@ RDEPEND="
 src_install() {
 	default
 	if use bash-completion; then
-		newbashcomp gentodo-completions.bash gentodo
+		newbashcomp src/gentodo/gentodo-completions.bash gentodo
 	fi
 }
