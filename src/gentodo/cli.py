@@ -101,6 +101,9 @@ def add_item(args, gentodo):
     if args.details is None:
         args.details = ["No", "details"]
 
+    if args.title is None:
+        print("Missing required title argument, did you forget `-t`?")
+        return
 
     gentodo.data[newest_id + 1] = {
         "title": " ".join(args.title),

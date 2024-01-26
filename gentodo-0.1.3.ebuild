@@ -6,7 +6,7 @@ EAPI=8
 PYTHON_COMPAT=( python3_{10..12} )
 
 DISTUTILS_USE_PEP517=setuptools
-inherit python-r1 distutils-r1
+inherit python-r1 distutils-r1 bash-completion-r1
 
 if [[ ${PV} == 9999* ]] ; then
 	inherit git-r3
@@ -22,6 +22,8 @@ DESCRIPTION="Todo program to help enhance your Gentoo workflow"
 LICENSE="GPL-3"
 SLOT="0"
 
+IUSE="bash-completion"
+
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 BDEPENDS="
@@ -33,3 +35,10 @@ DEPEND="
 RDEPEND="
 	${PYTHON_DEPS}
 "
+
+src_install() {
+	default
+	if use bash-completion; then
+		newbashcomp gentodo-completions.bash gentodo
+	fi
+}
