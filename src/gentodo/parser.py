@@ -1,7 +1,7 @@
 '''Hosts the bulk of the parser functionality'''
 
 import argparse
-from gentodo import cli, __version__
+from gentodo import bugs, cli, __version__
 
 
 def setup_parser():
@@ -88,5 +88,20 @@ def setup_parser():
     search_parser.add_argument('term')
 
     search_parser.set_defaults(func=cli.search_items)
+
+    bug_parser = subparsers.add_parser('bugs',
+                                       help="Interact with bugs relating to you",
+                                       usage="gentodo bugs [pull]")
+    bug_parser.add_argument('pull')
+    bug_parser.add_argument('-c',
+                            '--cc',
+                            action='store_true')
+    bug_parser.add_argument('-a',
+                            '--assigned',
+                            action='store_true')
+
+
+
+    bug_parser.set_defaults(func=cli.pull_bugs)
 
     return parser

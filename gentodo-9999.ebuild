@@ -32,4 +32,5 @@ DEPEND="
 "
 RDEPEND="
 	${PYTHON_DEPS}
+	dev-python/python-bugzilla
 "

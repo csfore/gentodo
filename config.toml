@@ -1,0 +1,4 @@
+[gentodo]
+token = "abcdefghijklmnopqrstuvqxyz"
+urls = ["https://bugs.gentoo.org/xmlrpc.cgi"]
+emails = ["user@example.com"]

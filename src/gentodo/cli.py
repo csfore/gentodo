@@ -2,9 +2,10 @@
 
 import json
 import os
+from gentodo import bugs
 
-
-STORAGE_DIR = os.path.expanduser("~/.local/share/todo")
+OLD_PATH = os.path.expanduser("~/.local/share/todo/todo.json")
+STORAGE_DIR = os.path.expanduser("~/.local/share/gentodo")
 TODO_FILE = os.path.join(STORAGE_DIR, "todo.json")
 
 class Gentodo:
@@ -13,6 +14,9 @@ class Gentodo:
     __slots__ = ["data", "longest"]
 
     def __init__(self):
+        if os.path.isfile(OLD_PATH):
+            os.rename(OLD_PATH, TODO_FILE)
+
         if not os.path.isdir(STORAGE_DIR):
             os.makedirs(STORAGE_DIR)
 
@@ -104,14 +108,21 @@ def add_item(args, gentodo):
     if args.title is None:
         print("Missing required title argument, did you forget `-t`?")
         return
+    
+    title = args.title
+    if type(title) is not str:
+        title = " ".join(title)
+    if len(title) > 40:
+        title = title[:40]
+        title += "..."
 
     gentodo.data[newest_id + 1] = {
-        "title": " ".join(args.title),
+        "title": title,
         "details": " ".join(args.details)
     }
 
     gentodo.write()
-    print(f"Added: {' '.join(args.title)} | {' '.join(args.details)}")
+    print(f"Added: {title} | {' '.join(args.details)}")
 
 
 def rm_item(args, gentodo):
@@ -145,3 +156,26 @@ def search_items(args, gentodo):
         for val in gentodo.data[key]:
             if args.term in gentodo.data[key][val]:
                 print(f"{key} | {gentodo.data[key][val]}")
+
+def pull_bugs(args, gentodo):
+    bz = bugs.Bugs()
+    allbugs = []
+    if args.cc:
+        cced = bz.get_cced()
+        for bug in cced:
+            bug = "[BUGZILLA] " + f"{bug}"
+            allbugs.append(bug)
+
+    if args.assigned:
+        assigned = bz.get_assigned()
+        for bug in assigned:
+            bug = "[BUGZILLA]" + f"{bug}"
+            allbugs.append(bug)
+    
+    # Make sure bugs are unique
+    set(allbugs)
+
+    for bug in allbugs:
+        args.title = bug
+        args.details = None
+        add_item(args, gentodo)
