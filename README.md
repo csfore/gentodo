@@ -36,6 +36,13 @@ Gentodo currently uses setuptools as its build system so building it is extremel
 
 That's it!
 
+### Other
+
+Note: you'll have to update manually if you do this method
+
+1. Copy `./gentodo` to a place in PATH (probably `/usr/bin`)
+2. Enjoy!
+
 ## Configuration
 
 Note: Only the first email and URL are queried for now.
@@ -45,13 +52,6 @@ The configuration file is currently stored in `~/.config/gentodo/config.toml` wi
 - `token`: The API key for Bugzilla
 - `urls`: Bugzilla URLs
 - `emails`: Emails to search Bugzilla for
-
-### Other
-
-Note: you'll have to update manually if you do this method
-
-1. Copy `./gentodo` to a place in PATH (probably `/usr/bin`)
-2. Enjoy!
 
 ## Todo for todo
 
