@@ -37,9 +37,9 @@ RDEPEND="
 	dev-python/python-bugzilla
 "
 
-src_install() {
-	default
+python_install_all() {
 	if use bash-completion; then
 		newbashcomp src/gentodo/gentodo-completions.bash gentodo
 	fi
+	distutils-r1_python_install_all
 }
