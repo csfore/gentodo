@@ -13,15 +13,14 @@ of the stuff they have to do while not having to leave their terminal.
 Currently a small feature set but currently the program has:
 - Human-readable data storage 
   - Can't count how many times I've seen programs use sqlite for stuff like this)
-- 0 external dependencies outside of Python 3 (as of 2023-11-22)
-  - Might use Click? See Todo
 - Simple enough syntax for anyone to use
+- Sync Bugzilla bugs to keep track of them in one place
 
 ## Building
 
 Gentodo currently uses setuptools as its build system so building it is extremely easy.
 
-1. Ensure you have Python installed (Gentodo is tested on Python 3.11 and 3.12
+1. Ensure you have Python installed (Gentodo is tested on Python 3.11 and 3.12)
 2. Create a virtual environment with `python -m venv .venv`
 3. Source the environment with `. .venv/bin/activate`
 4. Use pip to build it with `pip install -e .`
@@ -36,6 +35,16 @@ Gentodo currently uses setuptools as its build system so building it is extremel
 3. `emerge -av gentodo::local` or `ebuild ./gentodo-[latest-version].ebuild clean install merge`
 
 That's it!
+
+## Configuration
+
+Note: Only the first email and URL are queried for now.
+
+The configuration file is currently stored in `~/.config/gentodo/config.toml` with the following fields:
+
+- `token`: The API key for Bugzilla
+- `urls`: Bugzilla URLs
+- `emails`: Emails to search Bugzilla for
 
 ### Other
 
