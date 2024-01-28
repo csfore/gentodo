@@ -14,8 +14,11 @@ class Gentodo:
     __slots__ = ["data", "longest"]
 
     def __init__(self):
-        if os.path.isfile(OLD_PATH):
-            os.rename(OLD_PATH, TODO_FILE)
+        try:
+            if os.path.isfile(OLD_PATH):
+                os.rename(OLD_PATH, TODO_FILE)
+        except:
+            pass
 
         if not os.path.isdir(STORAGE_DIR):
             os.makedirs(STORAGE_DIR)
