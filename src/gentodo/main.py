@@ -1,21 +1,41 @@
-'''Gentodo (c) 2023 Christopher Fore
-This code is licensed under the GPLv3 license (see LICENSE for details)
-'''
+import click
 
-#import bugzilla // commented out until used
-from gentodo import cli, parser, config, bugs
+from gentodo import commands, __version__
+
+
+@click.group(invoke_without_command=True)
+@click.version_option(__version__)
+@click.option('--verbose', '-v', default=False, is_flag=True)
+@click.option('--brief', '-b', default=None, type=str)
+@click.pass_context
+def cmd(ctx, verbose, brief):
+    '''General purpose command group'''
+    ctx.ensure_object(dict)
+    ctx.obj['GENTODO'] = commands.Gentodo()
+    if ctx.invoked_subcommand is None:
+        ctx.forward(commands.show)
+
+
+@cmd.group()
+@click.pass_context
+def bugs(ctx):
+    '''Bugs command group'''
+    ctx.ensure_object(dict)
+    ctx.obj['GENTODO'] = commands.Gentodo()
+
+cmd.add_command(commands.show)
+cmd.add_command(commands.add)
+cmd.add_command(commands.rm)
+cmd.add_command(commands.count)
+cmd.add_command(commands.edit)
+cmd.add_command(commands.search)
+bugs.add_command(commands.pull_bugs)
+
 
 def main():
-    '''Main function'''
-    todo = cli.Gentodo()
-    unparsed = parser.setup_parser()
-
-    args = unparsed.parse_args()
-    args.func(args, todo)
-    #conf = config.Config()
-    #print(conf.get_token())
-    #bz = bugs.Bugs()
-    #print(bz.get_cced())
+    '''Main entrypoint'''
+    cmd()
 
 if __name__ == "__main__":
+    # Alternative Entrypoint
     main()
