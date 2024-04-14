@@ -15,6 +15,7 @@ license = {text = "GPLv3"}
 dependencies = [
 	"requests",
 	"python-bugzilla",
+	"click",
 ]
 
 [project.scripts]
