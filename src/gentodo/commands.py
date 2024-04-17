@@ -83,7 +83,8 @@ def show(ctx, verbose, brief):
         print(f"ID | {'Title'.ljust(spaces)}| Detail")
         print(f"{'─'*(spaces+14)}")
         for key in ctx.obj['GENTODO'].data:
-            print(f"{key:<2} │ {ctx.obj['GENTODO'].data[key]['title'].ljust(spaces)}│ {ctx.obj['GENTODO'].data[key]['details']}")
+            print(f"{key:<2} │ {ctx.obj['GENTODO'].data[key]['title'].ljust(spaces)}"\
+                  f"│ {ctx.obj['GENTODO'].data[key]['details']}")
     elif brief:
         print("Title".center(spaces))
         print(f"{'─'*spaces}")
@@ -101,7 +102,8 @@ def show(ctx, verbose, brief):
         print(f"{'Title'.ljust(spaces)}| Details")
         print(f"{'─'*(spaces+9)}")
         for key in ctx.obj['GENTODO'].data:
-            print(f"{ctx.obj['GENTODO'].data[key]['title'].ljust(spaces)}| {ctx.obj['GENTODO'].data[key]['details']}")
+            print(f"{ctx.obj['GENTODO'].data[key]['title'].ljust(spaces)}"\
+                  f"| {ctx.obj['GENTODO'].data[key]['details']}")
 
 
 @click.command(help="Add an item to your todo list")
@@ -114,9 +116,6 @@ def add(ctx, title, details):
 
     newest_id = 0 if len(gentodo.data.keys()) == 0 else int(list(gentodo.data.keys())[-1])
 
-
-    if isinstance(title, str):
-        title = " ".join(title)
     if len(title) > 40:
         title = title[:40]
         title += "..."
@@ -132,13 +131,13 @@ def add(ctx, title, details):
 
 @click.command(name="del", help="Remove an item from the todo list")
 @click.pass_context
-@click.argument("id")
-def rm(ctx, id):
+@click.argument("id_", metavar="ID")
+def rm(ctx, id_):
     '''Removes an item from the todo list by ID'''
     gentodo = ctx.obj['GENTODO']
 
     if os.path.exists(TODO_FILE) and os.path.getsize(TODO_FILE) > 0:
-        gentodo.data.pop(f"{id}")
+        gentodo.data.pop(f"{id_}")
         gentodo.write()
 
 @click.command(help="Shows the number of items remaining")
@@ -153,15 +152,15 @@ def count(ctx):
 
 @click.command(help="Edit an item by ID")
 @click.pass_context
-@click.argument("id")
+@click.argument("id_", metavar="ID")
 @click.option("-t", "--title", required=True)
 @click.option("-d", "--details", default="No details")
-def edit(ctx, id, title, details):
+def edit(ctx, id_, title, details):
     '''Edits an item entry'''
     gentodo = ctx.obj['GENTODO']
 
-    gentodo.data[id]['title'] = title
-    gentodo.data[id]['details'] = details
+    gentodo.data[id_]['title'] = title
+    gentodo.data[id_]['details'] = details
 
     gentodo.write()
 
@@ -179,6 +178,7 @@ def search(ctx, term):
         for val in gentodo.data[key]:
             if term in gentodo.data[key][val]:
                 print(f"{key} | {gentodo.data[key][val]}")
+
 
 @click.command(name="pull", help="Pulls bugs relating to you from the Bugzilla")
 @click.pass_context

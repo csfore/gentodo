@@ -1,4 +1,5 @@
 [gentodo]
 token = "abcdefghijklmnopqrstuvqxyz"
+token-cmd = "pass bugzilla 2>/dev/null | tr -d '\n'"
 urls = ["https://bugs.gentoo.org/xmlrpc.cgi"]
 emails = ["user@example.com"]

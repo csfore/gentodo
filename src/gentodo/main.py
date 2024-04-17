@@ -1,3 +1,7 @@
+'''main.py
+The main entrypoint for Gentodo
+'''
+
 import click
 
 from gentodo import commands, __version__
