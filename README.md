@@ -64,7 +64,9 @@ The configuration file is currently stored in `~/.config/gentodo/config.toml` wi
   - bgo has an API so this might be do-able
   - Automatically add assigned bugs?
   - Broaden to bugzilla in general?
-- [ ] 
+- [ ] Syncing
+  - Git? Rsync? Client-Server or P2P?
+- [ ] Encryption?
 
 # Acknowledgements
 
