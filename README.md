@@ -48,7 +48,7 @@ Note: Only the first email and URL are queried for now.
 The configuration file is currently stored in `~/.config/gentodo/config.toml` with the following fields:
 
 | Name      | Type         | Description                                      |
-|-----------------------------------------------------------------------------|
+|-----------|--------------|--------------------------------------------------|
 | token     | String       | The API key for Bugzilla (overrides `token-cmd`) |
 | token-cmd | String       | The command that provides a token for Bugzilla   |
 | urls      | String Array | Bugzilla URLs                                    |
