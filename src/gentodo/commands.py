@@ -7,7 +7,9 @@ import click
 from gentodo import bugs
 
 OLD_PATH = os.path.expanduser("~/.local/share/todo/todo.json")
-STORAGE_DIR = os.path.expanduser("~/.local/share/gentodo")
+STORAGE_DIR = os.path.join(
+    os.getenv('XDG_DATA_HOME', os.path.expanduser("~/.local/share")),
+    "gentodo")
 TODO_FILE = os.path.join(STORAGE_DIR, "todo.json")
 
 class Gentodo:
