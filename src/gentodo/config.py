@@ -7,14 +7,16 @@ import sys
 import os
 import subprocess
 
-STORAGE_DIR = os.path.expanduser("~/.config/gentodo")
-CONFIG_FILE = os.path.join(STORAGE_DIR, "config.toml")
+CONFIG_DIR = os.path.join(
+    os.environ.get("XDG_CONFIG_HOME", os.path.expanduser("~/.config")),
+    "gentodo")
+CONFIG_FILE = os.path.join(CONFIG_DIR, "config.toml")
 
 class Config:
     '''Class to handle the configuration file settings'''
     def __init__(self):
         if not os.path.isfile(CONFIG_FILE):
-            os.makedirs(STORAGE_DIR)
+            os.makedirs(CONFIG_DIR)
             with open(CONFIG_FILE, "w", encoding="utf_8") as config:
                 config.write("[gentodo]\n")
         self.data = self.load_config()
