@@ -6,13 +6,13 @@ EAPI=8
 PYTHON_COMPAT=( python3_{10..12} )
 
 DISTUTILS_USE_PEP517=setuptools
-inherit python-r1 distutils-r1 bash-completion-r1
+inherit python-r1 distutils-r1
 
 if [[ ${PV} == 9999* ]] ; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/csfore/gentodo.git"
 else
-	SRC_URI="https://github.com/csfore/gentodo/releases/download/${PV}/gentodo-${PV}.tar.gz"
+	SRC_URI="https://github.com/csfore/gentodo/archive/${PV}.tar.gz"
 	KEYWORDS="~amd64"
 fi
 
@@ -21,8 +21,6 @@ DESCRIPTION="Todo program to help enhance your Gentoo workflow"
 
 LICENSE="GPL-3"
 SLOT="0"
-
-IUSE="bash-completion"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
@@ -35,10 +33,4 @@ DEPEND="
 RDEPEND="
 	${PYTHON_DEPS}
 	dev-python/python-bugzilla
-	dev-python/click
 "
-
-python_install_all() {
-	newbashcomp src/gentodo/gentodo-completions.bash gentodo
-	distutils-r1_python_install_all
-}
